@@ -1,8 +1,8 @@
 require('dotenv').config();
 const { mungeTarot } = require('../lib/munge');
 //const { execSync } = require('child_process');
-//const fakeRequest = require('supertest');
-//const app = require('../lib/app');
+const fakeRequest = require('supertest');
+const app = require('../lib/app');
 
 describe('app routes', () => {
   describe('routes', () => {
@@ -1481,6 +1481,644 @@ describe('app routes', () => {
       };
       const actual = mungeTarot(data);
       expect(actual).toEqual(expectation);
+    });
+
+    test('returns munged tarot card from route', async() => {
+
+      const expectation = [
+        {
+          name: 'The Magician',
+          type: 'major',
+          value: 1,
+          suit: undefined,
+          meaning: 'Skill, diplomacy, address, subtlety; sickness, pain, loss, disaster, snares of enemies; self-confidence, will; the Querent, if male.',
+          meaningReverse: 'Physician, Magus, mental disease, disgrace, disquiet.'
+        },
+        {
+          name: 'The High Priestess',
+          type: 'major',
+          value: 2,
+          suit: undefined,
+          meaning: 'Secrets, mystery, the future as yet unrevealed; the woman who interests the Querent, if male; the Querent herself, if female; silence, tenacity; mystery, wisdom, science.',
+          meaningReverse: 'Passion, moral or physical ardour, conceit, surface knowledge.'
+        },
+        {
+          name: 'The Empress',
+          type: 'major',
+          value: 3,
+          suit: undefined,
+          meaning: 'Fruitfulness, action, initiative, length of days; the unknown, clandestine; also difficulty, doubt, ignorance.',
+          meaningReverse: 'Light, truth, the unravelling of involved matters, public rejoicings; according to another reading, vacillation.'
+        },
+        {
+          name: 'The Emperor',
+          type: 'major',
+          value: 4,
+          suit: undefined,
+          meaning: 'Stability, power, protection, realization; a great person; aid, reason, conviction; also authority and will.',
+          meaningReverse: 'Benevolence, compassion, credit; also confusion to enemies, obstruction, immaturity.'
+        },
+        {
+          name: 'The Hierophant',
+          type: 'major',
+          value: 5,
+          suit: undefined,
+          meaning: 'Marriage, alliance, captivity, servitude; by another account, mercy and goodness; inspiration; the man to whom the Querent has recourse.',
+          meaningReverse: 'Society, good understanding, concord, overkindness, weakness.'
+        },
+        {
+          name: 'The Lovers',
+          type: 'major',
+          value: 6,
+          suit: undefined,
+          meaning: 'Attraction, love, beauty, trials overcome.',
+          meaningReverse: 'Failure, foolish designs. Another account speaks of marriage frustrated and contrarieties of all kinds.'
+        },
+        {
+          name: 'The Chariot',
+          type: 'major',
+          value: 7,
+          suit: undefined,
+          meaning: 'Succour, providence also war, triumph, presumption, vengeance, trouble.',
+          meaningReverse: 'Riot, quarrel, dispute, litigation, defeat.'
+        },
+        {
+          name: 'Fortitude',
+          type: 'major',
+          value: 8,
+          suit: undefined,
+          meaning: 'Power, energy, action, courage, magnanimity; also complete success and honours.',
+          meaningReverse: 'Despotism, abuse if power, weakness, discord, sometimes even disgrace.'
+        },
+        {
+          name: 'The Hermit',
+          type: 'major',
+          value: 9,
+          suit: undefined,
+          meaning: 'Prudence, circumspection; also and especially treason, dissimulation, roguery, corruption.',
+          meaningReverse: 'Concealment, disguise, policy, fear, unreasoned caution.'
+        },
+        {
+          name: 'Wheel Of Fortune',
+          type: 'major',
+          value: 10,
+          suit: undefined,
+          meaning: 'Destiny, fortune, success, elevation, luck, felicity.',
+          meaningReverse: 'Increase, abundance, superfluity.'
+        },
+        {
+          name: 'Justice',
+          type: 'major',
+          value: 11,
+          suit: undefined,
+          meaning: 'Equity, rightness, probity, executive; triumph of the deserving side in law.',
+          meaningReverse: 'Law in all its departments, legal complications, bigotry, bias, excessive severity.'
+        },
+        {
+          name: 'The Hanged Man',
+          type: 'major',
+          value: 12,
+          suit: undefined,
+          meaning: 'Wisdom, circumspection, discernment, trials, sacrifice, intuition, divination, prophecy.',
+          meaningReverse: 'Selfishness, the crowd, body politic.'
+        },
+        {
+          name: 'Death',
+          type: 'major',
+          value: 13,
+          suit: undefined,
+          meaning: 'End, mortality, destruction, corruption also, for a man, the loss of a benefactor for a woman, many contrarieties; for a maid, failure of marriage projects.',
+          meaningReverse: 'Inertia, sleep, lethargy, petrifaction, somnambulism; hope destroyed.'
+        },
+        {
+          name: 'Temperance',
+          type: 'major',
+          value: 14,
+          suit: undefined,
+          meaning: 'Economy, moderation, frugality, management, accommodation.',
+          meaningReverse: 'Things connected with churches, religions, sects, the priesthood, sometimes even the priest who will marry the Querent; also disunion, unfortunate combinations, competing interests.'
+        },
+        {
+          name: 'The Devil',
+          type: 'major',
+          value: 15,
+          suit: undefined,
+          meaning: 'Ravage, violence, vehemence, extraordinary efforts, force, fatality; that which is predestined but is not for this reason evil.',
+          meaningReverse: 'Evil fatality, weakness, pettiness, blindness.'
+        },
+        {
+          name: 'The Tower',
+          type: 'major',
+          value: 16,
+          suit: undefined,
+          meaning: 'Misery, distress, indigence, adversity, calamity, disgrace, deception, ruin. It is a card in particular of unforeseen catastrophe.',
+          meaningReverse: 'According to one account, the same in a lesser degree also oppression, imprisonment, tyranny.'
+        },
+        {
+          name: 'The Star',
+          type: 'major',
+          value: 17,
+          suit: undefined,
+          meaning: 'Loss, theft, privation, abandonment; another reading says-hope and bright prospects,',
+          meaningReverse: 'Arrogance, haughtiness, impotence.'
+        },
+        {
+          name: 'The Moon',
+          type: 'major',
+          value: 18,
+          suit: undefined,
+          meaning: 'Hidden enemies, danger, calumny, darkness, terror, deception, occult forces, error.',
+          meaningReverse: 'Instability, inconstancy, silence, lesser degrees of deception and error.'
+        },
+        {
+          name: 'The Sun',
+          type: 'major',
+          value: 19,
+          suit: undefined,
+          meaning: 'Material happiness, fortunate marriage, contentment.',
+          meaningReverse: 'The same in a lesser sense.'
+        },
+        {
+          name: 'The Last Judgment',
+          type: 'major',
+          value: 20,
+          suit: undefined,
+          meaning: 'Change of position, renewal, outcome. Another account specifies total loss though lawsuit.',
+          meaningReverse: 'Weakness, pusillanimity, simplicity; also deliberation, decision, sentence.'
+        },
+        {
+          name: 'The Fool',
+          type: 'major',
+          value: 0,
+          suit: undefined,
+          meaning: 'Folly, mania, extravagance, intoxication, delirium, frenzy, bewrayment.',
+          meaningReverse: 'Negligence, absence, distribution, carelessness, apathy, nullity, vanity.'
+        },
+        {
+          name: 'The World',
+          type: 'major',
+          value: 21,
+          suit: undefined,
+          meaning: 'Assured success, recompense, voyage, route, emigration, flight, change of place.',
+          meaningReverse: 'Inertia, fixity, stagnation, permanence.'
+        },
+        {
+          name: 'Page of Wands',
+          type: 'minor',
+          value: 11,
+          suit: 'wands',
+          meaning: 'Dark young man, faithful, a lover, an envoy, a postman. Beside a man, he will bear favourable testimony concerning him. A dangerous rival, if followed by the Page of Cups. Has the chief qualities of his suit. He may signify family intelligence.',
+          meaningReverse: 'Anecdotes, announcements, evil news. Also indecision and the instability which accompanies it.'
+        },
+        {
+          name: 'Knight of Wands',
+          type: 'minor',
+          value: 12,
+          suit: 'wands',
+          meaning: 'Departure, absence, flight, emigration. A dark young man, friendly. Change of residence.',
+          meaningReverse: 'Rupture, division, interruption, discord.'
+        },
+        {
+          name: 'Queen of Wands',
+          type: 'minor',
+          value: 13,
+          suit: 'wands',
+          meaning: 'A dark woman, countrywoman, friendly, chaste, loving, honourable. If the card beside her signifies a man, she is well disposed towards him; if a woman, she is interested in the Querent. Also, love of money, or a certain success in business.',
+          meaningReverse: 'Good, economical, obliging, serviceable. Signifies also--but in certain positions and in the neighbourhood of other cards tending in such directions--opposition, jealousy, even deceit and infidelity.'
+        },
+        {
+          name: 'King of Wands',
+          type: 'minor',
+          value: 14,
+          suit: 'wands',
+          meaning: 'Dark man, friendly, countryman, generally married, honest and conscientious. The card always signifies honesty, and may mean news concerning an unexpected heritage to fall in before very long.',
+          meaningReverse: 'Good, but severe; austere, yet tolerant.'
+        },
+        {
+          name: 'Ace of Wands',
+          type: 'minor',
+          value: 1,
+          suit: 'wands',
+          meaning: 'Creation, invention, enterprise, the powers which result in these; principle, beginning, source; birth, family, origin, and in a sense the virility which is behind them; the starting point of enterprises; according to another account, money, fortune, inheritance.',
+          meaningReverse: 'Fall, decadence, ruin, perdition, to perish also a certain clouded joy.'
+        },
+        {
+          name: 'Two of Wands',
+          type: 'minor',
+          value: 2,
+          suit: 'wands',
+          meaning: 'Between the alternative readings there is no marriage possible; on the one hand, riches, fortune, magnificence; on the other, physical suffering, disease, chagrin, sadness, mortification. The design gives one suggestion; here is a lord overlooking his dominion and alternately contemplating a globe; it looks like the malady, the mortification, the sadness of Alexander amidst the grandeur of this world\'s wealth.',
+          meaningReverse: 'Surprise, wonder, enchantment, emotion, trouble, fear.'
+        },
+        {
+          name: 'Three of Wands',
+          type: 'minor',
+          value: 3,
+          suit: 'wands',
+          meaning: 'He symbolizes established strength, enterprise, effort, trade, commerce, discovery; those are his ships, bearing his merchandise, which are sailing over the sea. The card also signifies able co-operation in business, as if the successful merchant prince were looking from his side towards yours with a view to help you.',
+          meaningReverse: 'The end of troubles, suspension or cessation of adversity, toil and disappointment.'
+        },
+        {
+          name: 'Four of Wands',
+          type: 'minor',
+          value: 4,
+          suit: 'wands',
+          meaning: 'They are for once almost on the surface--country life, haven of refuge, a species of domestic harvest-home, repose, concord, harmony, prosperity, peace, and the perfected work of these.',
+          meaningReverse: 'The meaning remains unaltered; it is prosperity, increase, felicity, beauty, embellishment.'
+        },
+        {
+          name: 'Five of Wands',
+          type: 'minor',
+          value: 5,
+          suit: 'wands',
+          meaning: 'Imitation, as, for example, sham fight, but also the strenuous competition and struggle of the search after riches and fortune. In this sense it connects with the battle of life. Hence some attributions say that it is a card of gold, gain, opulence.',
+          meaningReverse: 'Litigation, disputes, trickery, contradiction.'
+        },
+        {
+          name: 'Six of Wands',
+          type: 'minor',
+          value: 6,
+          suit: 'wands',
+          meaning: 'The card has been so designed that it can cover several significations; on the surface, it is a victor triumphing, but it is also great news, such as might be carried in state by the King\'s courier; it is expectation crowned with its own desire, the crown of hope, and so forth.',
+          meaningReverse: 'Apprehension, fear, as of a victorious enemy at the gate; treachery, disloyalty, as of gates being opened to the enemy; also indefinite delay.'
+        },
+        {
+          name: 'Seven of Wands',
+          type: 'minor',
+          value: 7,
+          suit: 'wands',
+          meaning: 'It is a card of valour, for, on the surface, six are attacking one, who has, however, the vantage position. On the intellectual plane, it signifies discussion, wordy strife; in business--negotiations, war of trade, barter, competition. It is further a card of success, for the combatant is on the top and his enemies may be unable to reach him.',
+          meaningReverse: 'Perplexity, embarrassments, anxiety. It is also a caution against indecision.'
+        },
+        {
+          name: 'Eight of Wands',
+          type: 'minor',
+          value: 8,
+          suit: 'wands',
+          meaning: 'Activity in undertakings, the path of such activity, swiftness, as that of an express messenger; great haste, great hope, speed towards an end which promises assured felicity; generally, that which is on the move; also the arrows of love.',
+          meaningReverse: 'Arrows of jealousy, internal dispute, stingings of conscience, quarrels; and domestic disputes for persons who are married.'
+        },
+        {
+          name: 'Nine of Wands',
+          type: 'minor',
+          value: 9,
+          suit: 'wands',
+          meaning: 'The card signifies strength in opposition. If attacked, the person will meet an onslaught boldly; and his build shews, that he may prove a formidable antagonist. With this main significance there are all its possible adjuncts--delay, suspension, adjournment.',
+          meaningReverse: 'Obstacles, adversity, calamity.'
+        },
+        {
+          name: 'Ten of Wands',
+          type: 'minor',
+          value: 10,
+          suit: 'wands',
+          meaning: 'A card of many significances, and some of the readings cannot be harmonized. I set aside that which connects it with honour and good faith. The chief meaning is oppression simply, but it is also fortune, gain, any kind of success, and then it is the oppression of these things. It is also a card of false-seeming, disguise, perfidy. The place which the figure is approaching may suffer from the rods that he carries. Success is stultified if the Nine of Swords follows, and if it is a question of a lawsuit, there will be certain loss.',
+          meaningReverse: 'Contrarieties, difficulties, intrigues, and their analogies.'
+        },
+        {
+          name: 'Page of Cups',
+          type: 'minor',
+          value: 11,
+          suit: 'cups',
+          meaning: 'Fair young man, one impelled to render service and with whom the Querent will be connected; a studious youth; news, message; application, reflection, meditation; also these things directed to business.',
+          meaningReverse: 'Taste, inclination, attachment, seduction, deception, artifice.'
+        },
+        {
+          name: 'Knight of Cups',
+          type: 'minor',
+          value: 12,
+          suit: 'cups',
+          meaning: 'Arrival, approach--sometimes that of a messenger; advances, proposition, demeanour, invitation, incitement.',
+          meaningReverse: 'Trickery, artifice, subtlety, swindling, duplicity, fraud.'
+        },
+        {
+          name: 'Queen of Cups',
+          type: 'minor',
+          value: 13,
+          suit: 'cups',
+          meaning: 'Good, fair woman; honest, devoted woman, who will do service to the Querent; loving intelligence, and hence the gift of vision; success, happiness, pleasure; also wisdom, virtue; a perfect spouse and a good mother.',
+          meaningReverse: 'The accounts vary; good woman; otherwise, distinguished woman but one not to be trusted; perverse woman; vice, dishonour, depravity.'
+        },
+        {
+          name: 'King of Cups',
+          type: 'minor',
+          value: 14,
+          suit: 'cups',
+          meaning: 'Fair man, man of business, law, or divinity; responsible, disposed to oblige the Querent; also equity, art and science, including those who profess science, law and art; creative intelligence.',
+          meaningReverse: 'Dishonest, double-dealing man; roguery, exaction, injustice, vice, scandal, pillage, considerable loss.'
+        },
+        {
+          name: 'Ace of Cups',
+          type: 'minor',
+          value: 1,
+          suit: 'cups',
+          meaning: 'House of the true heart, joy, content, abode, nourishment, abundance, fertility; Holy Table, felicity hereof.',
+          meaningReverse: 'House of the false heart, mutation, instability, revolution.'
+        },
+        {
+          name: 'Two of Cups',
+          type: 'minor',
+          value: 2,
+          suit: 'cups',
+          meaning: 'Love, passion, friendship, affinity, union, concord, sympathy, the interrelation of the sexes, and--as a suggestion apart from all offices of divination--that desire which is not in Nature, but by which Nature is sanctified.',
+          meaningReverse: ''
+        },
+        {
+          name: 'Three of Cups',
+          type: 'minor',
+          value: 3,
+          suit: 'cups',
+          meaning: 'The conclusion of any matter in plenty, perfection and merriment; happy issue, victory, fulfilment, solace, healing,',
+          meaningReverse: 'Expedition, dispatch, achievement, end. It signifies also the side of excess in physical enjoyment, and the pleasures of the senses.'
+        },
+        {
+          name: 'Four of Cups',
+          type: 'minor',
+          value: 4,
+          suit: 'cups',
+          meaning: 'Weariness, disgust, aversion, imaginary vexations, as if the wine of this world had caused satiety only; another wine, as if a fairy gift, is now offered the wastrel, but he sees no consolation therein. This is also a card of blended pleasure.',
+          meaningReverse: 'Novelty, presage, new instruction, new relations.'
+        },
+        {
+          name: 'Five of Cups',
+          type: 'minor',
+          value: 5,
+          suit: 'cups',
+          meaning: 'ure, looking sideways at three prone cups two others stand upright behind him; a bridge is in the background, leading to a small keep or holding. Divanatory Meanings: It is a card of loss, but something remains over; three have been taken, but two are left; it is a card of inheritance, patrimony, transmission, but not corresponding to expectations; with some interpreters it is a card of marriage, but not without bitterness or frustration.',
+          meaningReverse: 'News, alliances, affinity, consanguinity, ancestry, return, false projects.'
+        },
+        {
+          name: 'Six of Cups',
+          type: 'minor',
+          value: 6,
+          suit: 'cups',
+          meaning: 'A card of the past and of memories, looking back, as--for example--on childhood; happiness, enjoyment, but coming rather from the past; things that have vanished. Another reading reverses this, giving new relations, new knowledge, new environment, and then the children are disporting in an unfamiliar precinct.',
+          meaningReverse: 'The future, renewal, that which will come to pass presently.'
+        },
+        {
+          name: 'Seven of Cups',
+          type: 'minor',
+          value: 7,
+          suit: 'cups',
+          meaning: 'Fairy favours, images of reflection, sentiment, imagination, things seen in the glass of contemplation; some attainment in these degrees, but nothing permanent or substantial is suggested.',
+          meaningReverse: 'Desire, will, determination, project.'
+        },
+        {
+          name: 'Eight of Cups',
+          type: 'minor',
+          value: 8,
+          suit: 'cups',
+          meaning: 'The card speaks for itself on the surface, but other readings are entirely antithetical--giving joy, mildness, timidity, honour, modesty. In practice, it is usually found that the card shews the decline of a matter, or that a matter which has been thought to be important is really of slight consequence--either for good or evil.',
+          meaningReverse: 'Great joy, happiness, feasting.'
+        },
+        {
+          name: 'Nine of Cups',
+          type: 'minor',
+          value: 9,
+          suit: 'cups',
+          meaning: 'Concord, contentment, physical bien-être; also victory, success, advantage; satisfaction for the Querent or person for whom the consultation is made.',
+          meaningReverse: 'Truth, loyalty, liberty; but the readings vary and include mistakes, imperfections, etc.'
+        },
+        {
+          name: 'Ten of Cups',
+          type: 'minor',
+          value: 10,
+          suit: 'cups',
+          meaning: 'Contentment, repose of the entire heart; the perfection of that state; also perfection of human love and friendship; if with several picture-cards, a person who is taking charge of the Querent\'s interests; also the town, village or country inhabited by the Querent.',
+          meaningReverse: 'Repose of the false heart, indignation, violence.'
+        },
+        {
+          name: 'Page of Pentacles',
+          type: 'minor',
+          value: 11,
+          suit: 'pentacles',
+          meaning: 'Application, study, scholarship, reflection another reading says news, messages and the bringer thereof; also rule, management.',
+          meaningReverse: 'Prodigality, dissipation, liberality, luxury; unfavourable news.'
+        },
+        {
+          name: 'Knight of Pentacles',
+          type: 'minor',
+          value: 12,
+          suit: 'pentacles',
+          meaning: 'Utility, serviceableness, interest, responsibility, rectitude-all on the normal and external plane.',
+          meaningReverse: 'inertia, idleness, repose of that kind, stagnation; also placidity, discouragement, carelessness.'
+        },
+        {
+          name: 'Queen of Pentacles',
+          type: 'minor',
+          value: 13,
+          suit: 'pentacles',
+          meaning: 'Opulence, generosity, magnificence, security, liberty.',
+          meaningReverse: 'Evil, suspicion, suspense, fear, mistrust.'
+        },
+        {
+          name: 'King of Pentacles',
+          type: 'minor',
+          value: 14,
+          suit: 'pentacles',
+          meaning: 'Valour, realizing intelligence, business and normal intellectual aptitude, sometimes mathematical gifts and attainments of this kind; success in these paths.',
+          meaningReverse: 'Vice, weakness, ugliness, perversity, corruption, peril.'
+        },
+        {
+          name: 'Ace of Pentacles',
+          type: 'minor',
+          value: 1,
+          suit: 'pentacles',
+          meaning: 'Perfect contentment, felicity, ecstasy; also speedy intelligence; gold.',
+          meaningReverse: 'The evil side of wealth, bad intelligence; also great riches. In any case it shews prosperity, comfortable material conditions, but whether these are of advantage to the possessor will depend on whether the card is reversed or not.'
+        },
+        {
+          name: 'Two of Pentacles',
+          type: 'minor',
+          value: 2,
+          suit: 'pentacles',
+          meaning: 'On the one hand it is represented as a card of gaiety, recreation and its connexions, which is the subject of the design; but it is read also as news and messages in writing, as obstacles, agitation, trouble, embroilment.',
+          meaningReverse: 'Enforced gaiety, simulated enjoyment, literal sense, handwriting, composition, letters of exchange.'
+        },
+        {
+          name: 'Three of Pentacles',
+          type: 'minor',
+          value: 3,
+          suit: 'pentacles',
+          meaning: 'Métier, trade, skilled labour; usually, however, regarded as a card of nobility, aristocracy, renown, glory.',
+          meaningReverse: 'Mediocrity, in work and otherwise, puerility, pettiness, weakness.'
+        },
+        {
+          name: 'Four of Pentacles',
+          type: 'minor',
+          value: 4,
+          suit: 'pentacles',
+          meaning: 'The surety of possessions, cleaving to that which one has, gift, legacy, inheritance.',
+          meaningReverse: 'Suspense, delay, opposition.'
+        },
+        {
+          name: 'Five of Pentacles',
+          type: 'minor',
+          value: 5,
+          suit: 'pentacles',
+          meaning: 'The card foretells material trouble above all, whether in the form illustrated--that is, destitution--or otherwise. For some cartomancists, it is a card of love and lovers-wife, husband, friend, mistress; also concordance, affinities. These alternatives cannot be harmonized.',
+          meaningReverse: 'Disorder, chaos, ruin, discord, profligacy.'
+        },
+        {
+          name: 'Six of Pentacles',
+          type: 'minor',
+          value: 6,
+          suit: 'pentacles',
+          meaning: 'Presents, gifts, gratification another account says attention, vigilance now is the accepted time, present prosperity, etc.',
+          meaningReverse: 'Desire, cupidity, envy, jealousy, illusion.'
+        },
+        {
+          name: 'Seven of Pentacles',
+          type: 'minor',
+          value: 7,
+          suit: 'pentacles',
+          meaning: 'These are exceedingly contradictory; in the main, it is a card of money, business, barter; but one reading gives altercation, quarrels--and another innocence, ingenuity, purgation.',
+          meaningReverse: 'Cause for anxiety regarding money which it may be proposed to lend.'
+        },
+        {
+          name: 'Eight of Pentacles',
+          type: 'minor',
+          value: 8,
+          suit: 'pentacles',
+          meaning: 'Work, employment, commission, craftsmanship, skill in craft and business, perhaps in the preparatory stage.',
+          meaningReverse: 'Voided ambition, vanity, cupidity, exaction, usury. It may also signify the possession of skill, in the sense of the ingenious mind turned to cunning and intrigue.'
+        },
+        {
+          name: 'Nine of Pentacles',
+          type: 'minor',
+          value: 9,
+          suit: 'pentacles',
+          meaning: 'Prudence, safety, success, accomplishment, certitude, discernment.',
+          meaningReverse: 'Roguery, deception, voided project, bad faith.'
+        },
+        {
+          name: 'Ten of Pentacles',
+          type: 'minor',
+          value: 10,
+          suit: 'pentacles',
+          meaning: 'Gain, riches; family matters, archives, extraction, the abode of a family.',
+          meaningReverse: 'Chance, fatality, loss, robbery, games of hazard; sometimes gift, dowry, pension.'
+        },
+        {
+          name: 'Page of Swords',
+          type: 'minor',
+          value: 11,
+          suit: 'swords',
+          meaning: 'Authority, overseeing, secret service, vigilance, spying, examination, and the qualities thereto belonging.',
+          meaningReverse: 'More evil side of these qualities; what is unforeseen, unprepared state; sickness is also intimated.'
+        },
+        {
+          name: 'Knight of Swords',
+          type: 'minor',
+          value: 12,
+          suit: 'swords',
+          meaning: 'Skill, bravery, capacity, defence, address, enmity, wrath, war, destruction, opposition, resistance, ruin. There is therefore a sense in which the card signifies death, but it carries this meaning only in its proximity to other cards of fatality.',
+          meaningReverse: 'Imprudence, incapacity, extravagance.'
+        },
+        {
+          name: 'Queen of Swords',
+          type: 'minor',
+          value: 13,
+          suit: 'swords',
+          meaning: 'Widowhood, female sadness and embarrassment, absence, sterility, mourning, privation, separation.',
+          meaningReverse: 'Malice, bigotry, artifice, prudery, bale, deceit.'
+        },
+        {
+          name: 'King of Swords',
+          type: 'minor',
+          value: 14,
+          suit: 'swords',
+          meaning: 'Whatsoever arises out of the idea of judgment and all its connexions-power, command, authority, militant intelligence, law, offices of the crown, and so forth.',
+          meaningReverse: 'Cruelty, perversity, barbarity, perfidy, evil intention.'
+        },
+        {
+          name: 'Ace of Swords',
+          type: 'minor',
+          value: 1,
+          suit: 'swords',
+          meaning: 'Triumph, the excessive degree in everything, conquest, triumph of force. It is a card of great force, in love as well as in hatred. The crown may carry a much higher significance than comes usually within the sphere of fortune-telling.',
+          meaningReverse: 'The same, but the results are disastrous; another account says--conception, childbirth, augmentation, multiplicity.'
+        },
+        {
+          name: 'Two of Swords',
+          type: 'minor',
+          value: 2,
+          suit: 'swords',
+          meaning: 'Conformity and the equipoise which it suggests, courage, friendship, concord in a state of arms; another reading gives tenderness, affection, intimacy. The suggestion of harmony and other favourable readings must be considered in a qualified manner, as Swords generally are not symbolical of beneficent forces in human affairs.',
+          meaningReverse: 'Imposture, falsehood, duplicity, disloyalty.'
+        },
+        {
+          name: 'Three of Swords',
+          type: 'minor',
+          value: 3,
+          suit: 'swords',
+          meaning: 'Removal, absence, delay, division, rupture, dispersion, and all that the design signifies naturally, being too simple and obvious to call for specific enumeration.',
+          meaningReverse: 'Mental alienation, error, loss, distraction, disorder, confusion.'
+        },
+        {
+          name: 'Four of Swords',
+          type: 'minor',
+          value: 4,
+          suit: 'swords',
+          meaning: 'Vigilance, retreat, solitude, hermit\'s repose, exile, tomb and coffin. It is these last that have suggested the design.',
+          meaningReverse: 'Wise administration, circumspection, economy, avarice, precaution, testament.'
+        },
+        {
+          name: 'Five of Swords',
+          type: 'minor',
+          value: 5,
+          suit: 'swords',
+          meaning: 'Degradation, destruction, revocation, infamy, dishonour, loss, with the variants and analogues of these.',
+          meaningReverse: 'The same; burial and obsequies.'
+        },
+        {
+          name: 'Six of Swords',
+          type: 'minor',
+          value: 6,
+          suit: 'swords',
+          meaning: 'journey by water, route, way, envoy, commissionary, expedient.',
+          meaningReverse: 'Declaration, confession, publicity; one account says that it is a proposal of love.'
+        },
+        {
+          name: 'Seven of Swords',
+          type: 'minor',
+          value: 7,
+          suit: 'swords',
+          meaning: 'Design, attempt, wish, hope, confidence; also quarrelling, a plan that may fail, annoyance. The design is uncertain in its import, because the significations are widely at variance with each other.',
+          meaningReverse: 'Good advice, counsel, instruction, slander, babbling.'
+        },
+        {
+          name: 'Eight of Swords',
+          type: 'minor',
+          value: 8,
+          suit: 'swords',
+          meaning: 'Bad news, violent chagrin, crisis, censure, power in trammels, conflict, calumny; also sickness.',
+          meaningReverse: 'Disquiet, difficulty, opposition, accident, treachery; what is unforeseen; fatality.'
+        },
+        {
+          name: 'Nine of Swords',
+          type: 'minor',
+          value: 9,
+          suit: 'swords',
+          meaning: 'Death, failure, miscarriage, delay, deception, disappointment, despair.',
+          meaningReverse: 'Imprisonment, suspicion, doubt, reasonable fear, shame.'
+        },
+        {
+          name: 'Ten of Swords',
+          type: 'minor',
+          value: 10,
+          suit: 'swords',
+          meaning: 'Whatsoever is intimated by the design; also pain, affliction, tears, sadness, desolation. It is not especially a card of violent death.',
+          meaningReverse: 'Advantage, profit, success, favour, but none of these are permanent; also power and authority.'
+        }
+      ]
+      ;
+
+      const actual = await fakeRequest(app)
+        .get('/cards')
+        .expect('Content-Type', /json/);
+        //.expect(200);
+
+      expect(actual.body).toEqual(expectation);
     });
   });
 });
