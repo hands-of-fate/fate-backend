@@ -1483,7 +1483,7 @@ describe('app routes', () => {
       expect(actual).toEqual(expectation);
     });
 
-    test('returns munged tarot card from route', async() => {
+    test('gets all munged tarot cards', async() => {
 
       const expectation = [
         {
@@ -2115,9 +2115,198 @@ describe('app routes', () => {
 
       const actual = await fakeRequest(app)
         .get('/cards')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(actual.body).toEqual(expectation);
+    });
+    test('gets all munged tarot cards', async() => {
+
+      const expectation = [
+        {
+          name: 'The Magician',
+          type: 'major',
+          value: 1,
+          suit: undefined,
+          meaning: 'Skill, diplomacy, address, subtlety; sickness, pain, loss, disaster, snares of enemies; self-confidence, will; the Querent, if male.',
+          meaningReverse: 'Physician, Magus, mental disease, disgrace, disquiet.'
+        },
+        {
+          name: 'The High Priestess',
+          type: 'major',
+          value: 2,
+          suit: undefined,
+          meaning: 'Secrets, mystery, the future as yet unrevealed; the woman who interests the Querent, if male; the Querent herself, if female; silence, tenacity; mystery, wisdom, science.',
+          meaningReverse: 'Passion, moral or physical ardour, conceit, surface knowledge.'
+        },
+        {
+          name: 'The Empress',
+          type: 'major',
+          value: 3,
+          suit: undefined,
+          meaning: 'Fruitfulness, action, initiative, length of days; the unknown, clandestine; also difficulty, doubt, ignorance.',
+          meaningReverse: 'Light, truth, the unravelling of involved matters, public rejoicings; according to another reading, vacillation.'
+        },
+        {
+          name: 'The Emperor',
+          type: 'major',
+          value: 4,
+          suit: undefined,
+          meaning: 'Stability, power, protection, realization; a great person; aid, reason, conviction; also authority and will.',
+          meaningReverse: 'Benevolence, compassion, credit; also confusion to enemies, obstruction, immaturity.'
+        },
+        {
+          name: 'The Hierophant',
+          type: 'major',
+          value: 5,
+          suit: undefined,
+          meaning: 'Marriage, alliance, captivity, servitude; by another account, mercy and goodness; inspiration; the man to whom the Querent has recourse.',
+          meaningReverse: 'Society, good understanding, concord, overkindness, weakness.'
+        },
+        {
+          name: 'The Lovers',
+          type: 'major',
+          value: 6,
+          suit: undefined,
+          meaning: 'Attraction, love, beauty, trials overcome.',
+          meaningReverse: 'Failure, foolish designs. Another account speaks of marriage frustrated and contrarieties of all kinds.'
+        },
+        {
+          name: 'The Chariot',
+          type: 'major',
+          value: 7,
+          suit: undefined,
+          meaning: 'Succour, providence also war, triumph, presumption, vengeance, trouble.',
+          meaningReverse: 'Riot, quarrel, dispute, litigation, defeat.'
+        },
+        {
+          name: 'Fortitude',
+          type: 'major',
+          value: 8,
+          suit: undefined,
+          meaning: 'Power, energy, action, courage, magnanimity; also complete success and honours.',
+          meaningReverse: 'Despotism, abuse if power, weakness, discord, sometimes even disgrace.'
+        },
+        {
+          name: 'The Hermit',
+          type: 'major',
+          value: 9,
+          suit: undefined,
+          meaning: 'Prudence, circumspection; also and especially treason, dissimulation, roguery, corruption.',
+          meaningReverse: 'Concealment, disguise, policy, fear, unreasoned caution.'
+        },
+        {
+          name: 'Wheel Of Fortune',
+          type: 'major',
+          value: 10,
+          suit: undefined,
+          meaning: 'Destiny, fortune, success, elevation, luck, felicity.',
+          meaningReverse: 'Increase, abundance, superfluity.'
+        },
+        {
+          name: 'Justice',
+          type: 'major',
+          value: 11,
+          suit: undefined,
+          meaning: 'Equity, rightness, probity, executive; triumph of the deserving side in law.',
+          meaningReverse: 'Law in all its departments, legal complications, bigotry, bias, excessive severity.'
+        },
+        {
+          name: 'The Hanged Man',
+          type: 'major',
+          value: 12,
+          suit: undefined,
+          meaning: 'Wisdom, circumspection, discernment, trials, sacrifice, intuition, divination, prophecy.',
+          meaningReverse: 'Selfishness, the crowd, body politic.'
+        },
+        {
+          name: 'Death',
+          type: 'major',
+          value: 13,
+          suit: undefined,
+          meaning: 'End, mortality, destruction, corruption also, for a man, the loss of a benefactor for a woman, many contrarieties; for a maid, failure of marriage projects.',
+          meaningReverse: 'Inertia, sleep, lethargy, petrifaction, somnambulism; hope destroyed.'
+        },
+        {
+          name: 'Temperance',
+          type: 'major',
+          value: 14,
+          suit: undefined,
+          meaning: 'Economy, moderation, frugality, management, accommodation.',
+          meaningReverse: 'Things connected with churches, religions, sects, the priesthood, sometimes even the priest who will marry the Querent; also disunion, unfortunate combinations, competing interests.'
+        },
+        {
+          name: 'The Devil',
+          type: 'major',
+          value: 15,
+          suit: undefined,
+          meaning: 'Ravage, violence, vehemence, extraordinary efforts, force, fatality; that which is predestined but is not for this reason evil.',
+          meaningReverse: 'Evil fatality, weakness, pettiness, blindness.'
+        },
+        {
+          name: 'The Tower',
+          type: 'major',
+          value: 16,
+          suit: undefined,
+          meaning: 'Misery, distress, indigence, adversity, calamity, disgrace, deception, ruin. It is a card in particular of unforeseen catastrophe.',
+          meaningReverse: 'According to one account, the same in a lesser degree also oppression, imprisonment, tyranny.'
+        },
+        {
+          name: 'The Star',
+          type: 'major',
+          value: 17,
+          suit: undefined,
+          meaning: 'Loss, theft, privation, abandonment; another reading says-hope and bright prospects,',
+          meaningReverse: 'Arrogance, haughtiness, impotence.'
+        },
+        {
+          name: 'The Moon',
+          type: 'major',
+          value: 18,
+          suit: undefined,
+          meaning: 'Hidden enemies, danger, calumny, darkness, terror, deception, occult forces, error.',
+          meaningReverse: 'Instability, inconstancy, silence, lesser degrees of deception and error.'
+        },
+        {
+          name: 'The Sun',
+          type: 'major',
+          value: 19,
+          suit: undefined,
+          meaning: 'Material happiness, fortunate marriage, contentment.',
+          meaningReverse: 'The same in a lesser sense.'
+        },
+        {
+          name: 'The Last Judgment',
+          type: 'major',
+          value: 20,
+          suit: undefined,
+          meaning: 'Change of position, renewal, outcome. Another account specifies total loss though lawsuit.',
+          meaningReverse: 'Weakness, pusillanimity, simplicity; also deliberation, decision, sentence.'
+        },
+        {
+          name: 'The Fool',
+          type: 'major',
+          value: 0,
+          suit: undefined,
+          meaning: 'Folly, mania, extravagance, intoxication, delirium, frenzy, bewrayment.',
+          meaningReverse: 'Negligence, absence, distribution, carelessness, apathy, nullity, vanity.'
+        },
+        {
+          name: 'The World',
+          type: 'major',
+          value: 21,
+          suit: undefined,
+          meaning: 'Assured success, recompense, voyage, route, emigration, flight, change of place.',
+          meaningReverse: 'Inertia, fixity, stagnation, permanence.'
+        }
+      ]
+      ;
+
+      const actual = await fakeRequest(app)
+        .get('/cards/major')
         .expect('Content-Type', /json/);
         //.expect(200);
-
+      //console.log(actual.body);
       expect(actual.body).toEqual(expectation);
     });
   });
