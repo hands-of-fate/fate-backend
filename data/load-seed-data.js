@@ -14,11 +14,11 @@ async function run() {
     const users = await Promise.all(
       usersData.map(user => {
         return client.query(`
-                      INSERT INTO users (name, hash)
+                      INSERT INTO users (email, hash)
                       VALUES ($1, $2)
                       RETURNING *;
                   `,
-        [user.name, user.password]);
+        [user.email, user.password]);
       })
     );
       
