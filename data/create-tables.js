@@ -14,17 +14,15 @@ async function run() {
     await client.query(`
                 CREATE TABLE users (
                     id SERIAL PRIMARY KEY,
-                    email VARCHAR(256) NOT NULL,
+                    name VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );           
-                CREATE TABLE cards (
+                CREATE TABLE players (
                     id SERIAL PRIMARY KEY NOT NULL,
-                    name VARCHAR(512) NOT NULL,
-                    type VARCHAR(512) NOT NULL,
-                    value INTEGER NOT NULL,
-                    suit VARCHAR(512) NOT NULL,
-                    meaning_up VARCHAR(512) NOT NULL,
-                    meaning_rev VARCHAR(512) NOT NULL,
+                    all_cards JSON,
+                    current_deck JSON,
+                    health INTEGER,
+                    items JSON,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
