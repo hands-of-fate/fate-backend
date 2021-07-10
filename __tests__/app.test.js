@@ -9,6 +9,7 @@ describe('app routes', () => {
   
     test('returns munged tarot cards', async() => {
 
+      // might haver been a good idea to dump all this expectation data into a separate file for reabaility. It's tough to examine the tests with so much data in the way
       const expectation = [
         {
           name: 'The Magician',
